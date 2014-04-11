@@ -67,6 +67,7 @@ var Jumper = cc.Sprite.extend({
             }
         }
         this.x += this.vx;
+        this.inScreen();
     },
 
     inScreen: function(){
@@ -76,7 +77,7 @@ var Jumper = cc.Sprite.extend({
         if ( this.x > screenWidth ) {
             this.x -= screenWidth;
         }
-    }
+    },
 
     updateYMovement: function() {
         if ( this.ground ) {
@@ -133,12 +134,16 @@ var Jumper = cc.Sprite.extend({
                                                   oldRect,
                                                   newRect );
                 
-                if ( topBlock ) {
-                    this.ground = topBlock;
-                    this.y = topBlock.getTopY();
-                    this.vy = 0;
-                }
+                this.setNewGround(topBlock);
             }
+        }
+    },
+
+    setNewGround: function(topBlock){
+        if ( topBlock ) {
+            this.ground = topBlock;
+            this.y = topBlock.getTopY();
+            this.vy = 0;
         }
     },
     
