@@ -86,8 +86,7 @@ var Jumper = cc.Sprite.extend({
                 this.jumpUp();
             }
         } else {
-            this.vy += this.g;
-            this.y += this.vy;
+            this.fallDown();
         }
     },
 
@@ -95,6 +94,11 @@ var Jumper = cc.Sprite.extend({
         this.vy = this.jumpV;
         this.y = this.ground.getTopY() + this.vy;
         this.ground = null;       
+    },
+
+    fallDown: function(){
+        this.vy += this.g;
+        this.y += this.vy;
     },
 
     isSameDirection: function( dir ) {
@@ -168,14 +172,16 @@ var Jumper = cc.Sprite.extend({
     },
     
     handleKeyDown: function( e ) {
-        if ( Jumper.KEYMAP[ e ] != undefined ) {
-            this[ Jumper.KEYMAP[ e ] ] = true;
-        }
+        this.setPressingKey( e, true );
     },
 
     handleKeyUp: function( e ) {
+        this.setPressingKey( e, false );
+    },
+
+    setPressingKey: function(e , isPressed){
         if ( Jumper.KEYMAP[ e ] != undefined ) {
-            this[ Jumper.KEYMAP[ e ] ] = false;
+            this[ Jumper.KEYMAP[ e ] ] = isPressed;
         }
     },
 
