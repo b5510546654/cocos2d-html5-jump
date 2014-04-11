@@ -83,14 +83,18 @@ var Jumper = cc.Sprite.extend({
         if ( this.ground ) {
             this.vy = 0;
             if ( this.jump ) {
-                this.vy = this.jumpV;
-                this.y = this.ground.getTopY() + this.vy;
-                this.ground = null;
+                this.jumpUp();
             }
         } else {
             this.vy += this.g;
             this.y += this.vy;
         }
+    },
+
+    jumpUp: function(){
+        this.vy = this.jumpV;
+        this.y = this.ground.getTopY() + this.vy;
+        this.ground = null;       
     },
 
     isSameDirection: function( dir ) {
